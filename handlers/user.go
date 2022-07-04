@@ -30,3 +30,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 
 	return c.JSON(http.StatusCreated, user)
 }
+
+func (h *Handler) Login(c echo.Context) (err error) {
+	return
+}
