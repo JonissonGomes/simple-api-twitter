@@ -57,5 +57,12 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	assert["id"] = user.ID
 	assert["expiration"] = time.Now().Add(time.Hour * 48).Unix()
 
-	return
+	// Generate encoded token
+	user.Token, err = token.SignedString([]byte(DbKey))
+	if err != nil {
+		return err
+	}
+
+	user.Password = ""
+	return c.JSON(http.StatusOK, user)
 }
