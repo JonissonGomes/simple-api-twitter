@@ -28,5 +28,5 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 		return
 	}
 
-	return
+	return c.JSON(http.StatusCreated, user)
 }
