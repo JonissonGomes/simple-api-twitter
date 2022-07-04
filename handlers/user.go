@@ -32,5 +32,11 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 }
 
 func (h *Handler) Login(c echo.Context) (err error) {
+	// User connect
+	user := &model.User{ID: bson.NewObjectId()}
+	if err = c.Bind(user); err != nil {
+		return
+	}
+
 	return
 }
