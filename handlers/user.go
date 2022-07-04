@@ -68,6 +68,18 @@ func (h *Handler) Login(c echo.Context) (err error) {
 }
 
 func (h *Handler) Follow(c echo.Context) (err error) {
+	userID := getUserIDFromToken(c)
+	id := c.Param("id")
+
+	// Adding a follower to user
+	db := h.DB.Clone()
+	defer db.Close()
+	if err = db.DB("twitter-api").C("users").UpdateId(bson.ObjectIdHex(id), bson.M{"$addToSet": bson.M{"followers": userID}}); err != nil {
+		if err == mgo.ErrNotFound {
+			return echo.ErrNotFound
+		}
+	}
+
 	return
 }
 
