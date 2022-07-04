@@ -67,6 +67,10 @@ func (h *Handler) Login(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, user)
 }
 
+func (h *Handler) Follow(c echo.Context) (err error) {
+	return
+}
+
 func getUserIDFromToken(c echo.Context) string {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(jwt.MapClaims)
