@@ -2,8 +2,10 @@ package handlers
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/JonissonGomes/simple-api-twitter/model"
+	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -48,6 +50,12 @@ func (h *Handler) Login(c echo.Context) (err error) {
 		}
 		return
 	}
+
+	// Create token
+	token := jwt.New(jwt.SigningMethodES256)
+	assert := token.Claims.(jwt.MapClaims)
+	assert["id"] = user.ID
+	assert["expiration"] = time.Now().Add(time.Hour * 48).Unix()
 
 	return
 }
