@@ -21,5 +21,12 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 		return &echo.HTTPError{Code: http.StatusBadRequest, Message: "Email ou senha não conferem"}
 	}
 
+	// Save user
+	db := h.DB.Clone()
+	defer db.Close()
+	if err = db.DB("twitter-api").C("users").Insert(user); err != nil {
+		return
+	}
+
 	return
 }
